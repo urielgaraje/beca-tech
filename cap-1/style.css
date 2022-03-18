@@ -1,3 +1,43 @@
+/* reset css style cross browsers */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
 body {
-    background-color: orange;
+    height: 100%;
+}
+
+body {
+    line-height: 1.5;
+}
+
+div {
+    background-color: red;
+}
+
+a:link {
+    color: red;
+}
+a:hover {
+    color: rgb(246, 180, 14);
+}
+
+.model-box {
+    width: 400px;
+    height: 200px;
+    border: 1px solid black;
+    padding: 5px;
+    margin: 10px;
+}
+
+#div-principal {
+    background-color: blue;
+}
+
+div p.p-especial {
+    font-size: 20px;
 }
