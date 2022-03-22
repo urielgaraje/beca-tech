@@ -82,9 +82,8 @@ footer {
         order: 1;
     }
 
-    .container {
+    .container {    
         flex-direction: row;
-        justify-content: space-between;
         column-gap: 1rem;
     }
 
