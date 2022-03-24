@@ -1,0 +1,99 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 10px;
+}
+body {
+    min-height: 100vh;
+    background-image: linear-gradient(5deg, #5fb9b9, #e77b7b);
+    display: flex;
+    line-height: 1.5;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    font-size: 1.6rem;
+}
+
+footer {
+    display: flex;
+    height: 100px;
+    background-color: #b1b1b1;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+.box {
+    display: flex;
+    align-items: center;
+    background-color: #b1b1b1;
+    flex: 2;
+    justify-content: center;
+    margin: 1rem;
+    font-size: 20px;
+}
+
+.box-container {
+    display: flex;
+    margin-bottom: 1rem;
+    flex: 2;
+    flex-direction: row;
+    column-gap: 1rem;
+}
+
+.grid {
+    display: grid;
+    background-image: linear-gradient(5deg, #5fb9b9, #e77b7b);
+    grid-template-rows: repeat(4, 100px);
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    grid-gap: 3rem;
+}
+.caja1 {
+    background: #b1b1b1;
+}
+
+#contenedor {
+    display: flex;
+    background-color: #b1b1b1;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex: 1;
+    margin-bottom: 2rem;
+    height: 50px;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 700px) {
+    #contenedor {
+        background-color: #b1b1b1;
+        flex-direction: column;
+    }
+    .box {
+        flex: 1;
+        background-color: #b1b1b1;
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .box-container {
+        flex-direction: column;
+        column-gap: 1rem;
+        margin-bottom: 1rem;
+        flex: 1;
+    }
+    .grid {
+        display: grid;
+        background-color: #eee;
+        grid-template-rows: repeat(4, 90px);
+        grid-template-columns: 1fr 1fr 0.1fr;
+        margin-bottom: 1rem;
+        grid-gap: 1rem;
+    }
+}
