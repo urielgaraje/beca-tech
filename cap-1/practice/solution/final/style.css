@@ -22,6 +22,7 @@ nav {
   justify-content: space-between;
   padding: 0 20px;
   position: relative;
+  background-color: #fff;
 }
 nav .nav__menu {
   display: none;
@@ -255,9 +256,56 @@ button {
   margin-bottom: 2rem;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   nav .menu--desktop {
-    display: block;
+    display: none;
+  }
+
+  .header {
+    flex-direction: row;
+    padding-left: 150px;
+  }
+  .header__left {
+    order: 1;
+    flex: 1;
+    text-align: left;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .header__left .left__content {
+    max-width: 400px;
+  }
+  .header__right {
+    order: 2;
+    flex: 1;
+    background-image: url("./images/bg-intro-desktop.svg");
+    background-position: 120px -140px;
+    overflow: visible;
+  }
+  .header__right img {
+    margin-top: -130px;
+    margin-left: 190px;
+    margin-bottom: -130px;
+    max-width: 600px;
+  }
+
+  .features {
+    padding: 0 150px;
+  }
+  .features__top {
+    text-align: left;
+  }
+  .features__top h2 {
+    width: 100%;
+  }
+  .features__top p {
+    max-width: 50%;
+  }
+  .features__bottom .features__cards-container {
+    flex-direction: row;
+  }
+  .features__bottom .features__cards-container .card {
+    text-align: left;
   }
 }
 
