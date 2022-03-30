@@ -55,9 +55,9 @@ nav {
         display: block;
     }
 
-    .menu--desktop {
+    /*.menu--desktop {
         display: none;
-    }
+    }*/
 
     input {
         position: absolute;
@@ -295,10 +295,47 @@ button {
     }
 }
 
-@media screen and (min-width: 1200px) {
+
+@media screen and (min-width: 1000px) {
+   
     nav {
         .menu--desktop {
-            display: block;
+            display: flex;
+           
+        }
+        .nav__menu{
+            display: none;
+        }
+
+    }
+    .articles{
+        h2{
+            text-align: left;
         }
     }
+    .articles__container{
+        display: flex;
+        flex-direction: row;
+        
+    }
+    .features{
+        display: flex;
+        flex-direction: row;
+    }
+    .header{
+        flex-direction: row;
+        &__left{
+            order:1;
+            flex:1;
+
+        }
+        &__right{
+            order:2;
+            flex:1;
+            background-image: url('');
+            background-position: 0px- 180px;
+
+        }
+    }
+
 }

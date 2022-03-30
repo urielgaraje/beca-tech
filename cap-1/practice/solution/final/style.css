@@ -22,6 +22,9 @@ nav {
   justify-content: space-between;
   padding: 0 20px;
   position: relative;
+  /*.menu--desktop {
+      display: none;
+  }*/
 }
 nav .nav__menu {
   display: none;
@@ -47,9 +50,6 @@ nav ul li:not(:last-child) {
 }
 nav input:checked ~ .nav__menu {
   display: block;
-}
-nav .menu--desktop {
-  display: none;
 }
 nav input {
   position: absolute;
@@ -255,9 +255,40 @@ button {
   margin-bottom: 2rem;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1000px) {
   nav .menu--desktop {
-    display: block;
+    display: flex;
+  }
+  nav .nav__menu {
+    display: none;
+  }
+
+  .articles h2 {
+    text-align: left;
+  }
+
+  .articles__container {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .features {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .header {
+    flex-direction: row;
+  }
+  .header__left {
+    order: 1;
+    flex: 1;
+  }
+  .header__right {
+    order: 2;
+    flex: 1;
+    background-image: url("");
+    background-position: 0px- 180px;
   }
 }
 
