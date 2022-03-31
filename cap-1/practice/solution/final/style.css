@@ -5,8 +5,9 @@
   margin: 0;
 }
 
-html {
+html, body {
   font-size: 10px;
+  overflow-x: hidden;
 }
 
 body {
@@ -71,6 +72,10 @@ nav .nav__button {
   width: 30px;
 }
 
+button:hover {
+  background: linear-gradient(90deg, #7ac28d, #78bdce);
+}
+
 h2 {
   font-weight: 300;
   color: #2d314d;
@@ -130,6 +135,8 @@ button {
   background-color: #f3f4f6;
 }
 .features__top {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   padding: 7rem 3.2rem 2rem;
 }
@@ -224,6 +231,18 @@ button {
   font-size: 1.5rem;
 }
 .footer__wrapper button {
+  margin-bottom: 2.6rem;
+}
+.footer__wrapper2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer__wrapper2 p {
+  color: #9698a6;
+  font-size: 1.5rem;
+}
+.footer__wrapper2 button {
   margin-bottom: 2.6rem;
 }
 .footer .media-container {
