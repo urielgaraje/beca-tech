@@ -285,6 +285,9 @@ button {
 }
 @media screen and (min-width: 1000px) {
     nav {
+        button{
+            display: block;
+        }
         .nav__button {
             display: none;
         }
