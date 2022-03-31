@@ -5,8 +5,9 @@
   margin: 0;
 }
 
-html {
+html, body {
   font-size: 10px;
+  overflow-x: hidden;
 }
 
 body {
@@ -22,13 +23,10 @@ nav {
   justify-content: space-between;
   padding: 0 20px;
   position: relative;
-<<<<<<< HEAD
-  /*.menu--desktop {
-      display: none;
-  }*/
-=======
   background-color: #fff;
->>>>>>> develop
+}
+nav button {
+  display: none;
 }
 nav .nav__menu {
   display: none;
@@ -55,6 +53,9 @@ nav ul li:not(:last-child) {
 nav input:checked ~ .nav__menu {
   display: block;
 }
+nav .menu--desktop {
+  display: none;
+}
 nav input {
   position: absolute;
   display: none;
@@ -68,6 +69,10 @@ nav .nav__button {
   background-size: contain;
   height: 20px;
   width: 30px;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #7ac28d, #78bdce);
 }
 
 h2 {
@@ -129,6 +134,8 @@ button {
   background-color: #f3f4f6;
 }
 .features__top {
+  display: flex;
+  flex-direction: column;
   text-align: center;
   padding: 7rem 3.2rem 2rem;
 }
@@ -225,6 +232,18 @@ button {
 .footer__wrapper button {
   margin-bottom: 2.6rem;
 }
+.footer__wrapper2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer__wrapper2 p {
+  color: #9698a6;
+  font-size: 1.5rem;
+}
+.footer__wrapper2 button {
+  margin-bottom: 2.6rem;
+}
 .footer .media-container {
   list-style: none;
   display: flex;
@@ -260,59 +279,63 @@ button {
 }
 
 @media screen and (min-width: 1000px) {
-  nav .menu--desktop {
-<<<<<<< HEAD
-    display: flex;
-  }
-  nav .nav__menu {
+  nav .nav__button {
     display: none;
   }
-
-  .articles h2 {
-    text-align: left;
+  nav .menu--desktop {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+    align-self: stretch;
   }
-
-  .articles__container {
+  nav .menu--desktop ul {
     display: flex;
     flex-direction: row;
+    width: 100%;
+    max-width: 600px;
+    padding: 0;
+    justify-content: space-between;
+    align-items: stretch;
   }
-
-  .features {
+  nav .menu--desktop ul li {
     display: flex;
-    flex-direction: row;
+    color: #9698a6;
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
-
-  .header {
-    flex-direction: row;
-=======
+  nav .menu--desktop ul li:hover::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #7ac28d, #78bdce);
+    bottom: 0;
+  }
+  nav .nav__menu {
     display: none;
   }
 
   .header {
     flex-direction: row;
     padding-left: 150px;
->>>>>>> develop
   }
   .header__left {
     order: 1;
     flex: 1;
-<<<<<<< HEAD
-=======
     text-align: left;
     justify-content: center;
     align-items: flex-start;
   }
   .header__left .left__content {
     max-width: 400px;
->>>>>>> develop
   }
   .header__right {
     order: 2;
     flex: 1;
-<<<<<<< HEAD
-    background-image: url("");
-    background-position: 0px- 180px;
-=======
     background-image: url("./images/bg-intro-desktop.svg");
     background-position: 120px -140px;
     overflow: visible;
@@ -341,7 +364,72 @@ button {
   }
   .features__bottom .features__cards-container .card {
     text-align: left;
->>>>>>> develop
+  }
+
+  .articles h2 {
+    text-align: left;
+  }
+  .articles .articles__container {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    max-width: 100%;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: row;
+    height: 200px;
+    justify-content: center;
+  }
+  .footer .footer__wrapper {
+    flex: 1;
+    justify-content: space-between;
+    max-width: 30%;
+    align-items: flex-start;
+    padding-top: 2.5rem;
+  }
+  .footer .footer__links-container {
+    display: flex;
+    flex: 2;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 7rem;
+    font-size: 1.5rem;
+  }
+  .footer .footer__links-container .links-container__left {
+    flex: 1;
+  }
+  .footer .footer__links-container .links-container__left ul {
+    text-align: left;
+  }
+  .footer .footer__links-container .links-container__left ul a:hover {
+    color: #31d35c;
+  }
+  .footer .footer__links-container .links-container__right {
+    flex: 1;
+  }
+  .footer .footer__links-container .links-container__right ul {
+    text-align: left;
+  }
+  .footer .footer__links-container .links-container__right ul a:hover {
+    color: #31d35c;
+  }
+  .footer .footer__wrapper--2 {
+    display: flex;
+    flex-direction: column;
+    flex: 1.4;
+    color: #9698a6;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .footer .footer__wrapper--2 p {
+    font-size: 1rem;
+    margin-top: 1.5rem;
+  }
+  .footer .spacer {
+    display: flex;
+    flex: 1;
   }
 }
 
