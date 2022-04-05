@@ -5,3 +5,29 @@
 .hidden {
     display: none;
 }
+
+section {
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+.container {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: lightblue;
+}
+
+.card {
+    margin: 0 10px;
+    background-color: #fff;
+}
+
+.slick-list,
+.slick-track {
+    height: 100%;
+}
