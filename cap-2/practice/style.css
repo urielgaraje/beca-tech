@@ -31,3 +31,7 @@ section {
 .slick-track {
     height: 100%;
 }
+
+.to-delete {
+    background-color: lightcoral;
+}
