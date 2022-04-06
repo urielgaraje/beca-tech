@@ -7,9 +7,9 @@
 // Data
 const account1 = {
   owner: 'Uriel Blanco',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 450, -400, 3000.67, -650, -130, 70.43, 1300],
   interestRate: 1.2, // %
-  pin: 1111
+  pin: 1111,
 };
 
 const account2 = {
@@ -135,13 +135,15 @@ console.log(accounts);
   console.log(event);
 }); */
 
+let currentAccount;
+
 loginForm.addEventListener('submit', function (event) {
   event.preventDefault();
 
   const formData = new FormData(event.target);
   const formProps = Object.fromEntries(formData);
 
-  const account = accounts.find(function (acc) {
+  currentAccount = accounts.find(function (acc) {
     return acc.username === formProps.username;
   });
 
@@ -153,19 +155,46 @@ loginForm.addEventListener('submit', function (event) {
   //const account = accounts.find(acc => acc.username === formProps.username);
   // undefined & null === false
 
-  if (!account) {
+  if (!currentAccount) {
     alert('Error usuario no encontrado!');
   }
 
-  if (account?.pin === +formProps.pin) {
+  if (currentAccount?.pin === +formProps.pin) {
+    inputLoginUsername.value = '';
+    inputLoginPin.value = '';
 
-    // mensaje de bienvenida!
+    inputLoginPin.blur();
+
+    labelWelcome.textContent = `Bienvenido ${
+      currentAccount.owner.split(' ')[0]
+    }!`;
 
     containerApp.style.opacity = 100;
+    updateUI(currentAccount);
   }
-
-  console.log(account);
 
   /*  console.log(formProps);
   console.log(event); */
 });
+
+function displayMovements(acc) {
+  containerMovements.innerHTML = '';
+
+  acc.movements.forEach(function (mov) {
+    const html = `
+      <div class="movements__row">
+        <div class="movements__type movements__type--${
+          mov >= 0 ? 'deposit' : 'withdrawal'
+        }">${mov >= 0 ? 'Ingreso' : 'Retiro'}</div>
+        <div class="movements__date"> 6/4/2022</div>
+        <div class="movements__value">${mov}€</div>
+      </div>
+    `;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+}
+
+function updateUI(acc) {
+  displayMovements(acc);
+}
