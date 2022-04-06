@@ -73,7 +73,7 @@ const currencies = new Map([
   ['GBP', 'Libra esterlina'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000.25, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 /* const account1 = {
@@ -88,19 +88,19 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // a => { return a};
 //let account;
 
-function createUsernamesSLIM(account) {
-  const username = account.owner
+function createUsernamesSLIM(currentAccount) {
+  const username = currentAccount.owner
     .split(' ') /* => ['Uriel','Blanco'];*/
     .map(word => word.toLowerCase()[0])
     .join('');
 
-  account.username = username;
+    currentAccount.username = username;
 
-  return account;
+  return currentAccount;
 }
 
-function createUsernames(account) {
-  const username = account.owner
+function createUsernames(currentAccount) {
+  const username = currentAccount.owner
     .split(' ') /* => ['Uriel','Blanco'];*/
     .map(function (word) {
       return word.toLowerCase();
@@ -110,7 +110,7 @@ function createUsernames(account) {
     }) /* ['u', 'b']*/
     .join(''); /* ['u', 'b']*/
 
-  account.username = username;
+    currentAccount.username = username;
 }
 
 /*
@@ -127,7 +127,36 @@ accounts.forEach(function (acc) {
 console.log(accounts);
 //console.log(createUsernames(account1));
 
-/* */
+let currentAccount;
+
+function  displayMovements(acc){
+
+  containerMovements.innerHTML='';
+
+  acc.movements.forEach(function(mov){
+  
+    const html=`
+ 
+    <div class="movements__row">
+      <div class="movements__type movements__type--${
+        mov >=0 ? 'deposit' : 'withdrawal'
+      }">${mov >=0 ? 'Ingreso' : 'Retiro'} </div>
+      <div class="movements__date">6/04/2022</div>
+      <div class="movements__value">${mov}€</div>
+    </div>
+    `;
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+
+  });
+
+}
+
+function updateUI(acc){
+  displayMovements(acc);
+ 
+
+}
+
 loginForm.addEventListener('submit', function(event){
   event.preventDefault();
 //target contiene el form, obtenemos los datos del formulario clave:valor
@@ -138,22 +167,24 @@ loginForm.addEventListener('submit', function(event){
 formProps.username
 formProps.pin*/
 //acc sería cada objeto del array account
-const account=accounts.find(function(acc){
+const currentAccount=accounts.find(function(acc){
   return acc.username === formProps.username;
 });
 
-if(!account){
+if(!currentAccount){
   alert('Error: usuario no encontrado!');
 }
 
 
   //+formProps parseo de string a number
   //con account? me aseguro que exista antes de realizar la comprobación del pin
-  if( account?.pin === +formProps.pin ){  
+  if( currentAccount?.pin === +formProps.pin ){  
     containerApp.style.opacity=100;
+    updateUI(currentAccount);
     inputLoginUsername.value="";
     inputLoginPin.value="";
-    labelWelcome.textContent=`Bienvenido, ${account.owner.split(' ')[0]} !`;
+    inputLoginPin.blur();
+    labelWelcome.textContent=`Bienvenido, ${currentAccount?.owner.split(' ')[0]} !`;
 
   }
 
@@ -166,6 +197,6 @@ if(!account){
  
 /* const account = accounts.find(acc => acc.username === fromProps.username);
   */ 
-console.log(account);
+console.log(currentAccount);
 
 });
