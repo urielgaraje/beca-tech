@@ -86,6 +86,7 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //account.owner.split('l') => ['urie',' B','anco'];
 // (a,b) => { return a + b};
 // a => { return a};
+//let account;
 
 function createUsernamesSLIM(account) {
   const username = account.owner
@@ -148,21 +149,13 @@ if(!account){
 
   //+formProps parseo de string a number
   //con account? me aseguro que exista antes de realizar la comprobación del pin
-  if( account?.pin === +formProps.pin ){
-    //mensaje de bienvenida
+  if( account?.pin === +formProps.pin ){  
     containerApp.style.opacity=100;
+    inputLoginUsername.value="";
+    inputLoginPin.value="";
+    labelWelcome.textContent=`Bienvenido, ${account.owner.split(' ')[0]} !`;
+
   }
-
-
-
-
-
-account.pin === formProps.pin;
-
-
-
-
-
 
 /*evaluo si el usuario que hay en el array y el escrito por el usuario es el mismo  
  if(acc.username ===formProps.username){
@@ -173,10 +166,6 @@ account.pin === formProps.pin;
  
 /* const account = accounts.find(acc => acc.username === fromProps.username);
   */ 
-
-
-
 console.log(account);
-/*   console.log(formProps);
-  console.log(event); */
+
 });
