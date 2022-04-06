@@ -9,7 +9,7 @@ const account1 = {
   owner: 'Uriel Blanco',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
-  pin: 1111,
+  pin: 1111
 };
 
 const account2 = {
@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const loginForm = document.querySelector('.login');
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -105,7 +107,7 @@ function createUsernames(account) {
     .map(function (word) {
       return word[0];
     }) /* ['u', 'b']*/
-    .join(''); /* ['u', 'b']*/
+    .join(''); /* 'ub' */
 
   account.username = username;
 }
@@ -123,3 +125,47 @@ accounts.forEach(function (acc) {
 
 console.log(accounts);
 //console.log(createUsernames(account1));
+
+/* btnLogin.addEventListener('click', function (event) {
+  event.preventDefault();
+
+  console.log(inputLoginUsername.value);
+  console.log(inputLoginPin.value);
+
+  console.log(event);
+}); */
+
+loginForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const formProps = Object.fromEntries(formData);
+
+  const account = accounts.find(function (acc) {
+    return acc.username === formProps.username;
+  });
+
+  // function(a,b){
+  //  return a + b;
+  //}
+  // (a,b) => { return a +b };
+  // (a,b) =>  a + b ;
+  //const account = accounts.find(acc => acc.username === formProps.username);
+  // undefined & null === false
+
+  if (!account) {
+    alert('Error usuario no encontrado!');
+  }
+
+  if (account?.pin === +formProps.pin) {
+
+    // mensaje de bienvenida!
+
+    containerApp.style.opacity = 100;
+  }
+
+  console.log(account);
+
+  /*  console.log(formProps);
+  console.log(event); */
+});
