@@ -149,6 +149,7 @@ if(!account){
   //+formProps parseo de string a number
   //con account? me aseguro que exista antes de realizar la comprobación del pin
   if( account?.pin === +formProps.pin ){
+    //mensaje de bienvenida
     containerApp.style.opacity=100;
   }
 
