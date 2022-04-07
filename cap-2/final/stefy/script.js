@@ -7,28 +7,28 @@
 // Data
 const account1 = {
   owner: 'Uriel Blanco',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200.4321, 450, -400, 3000.30, -650, -130, 70, 1300.75],
   interestRate: 1.2, // %
   pin: 1111,
 };
 
 const account2 = {
   owner: 'Stefany Apolo',
-  movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
+  movements: [5000, 3400.40, -150, -790, -3210, -1000, 8500.90, -30],
   interestRate: 1.5,
   pin: 2222,
 };
 
 const account3 = {
   owner: 'Andres Ortiz',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
+  movements: [200, -200, 340.25, -300, -20, 50, 400.75, -460],
   interestRate: 0.7,
   pin: 3333,
 };
 
 const account4 = {
   owner: 'Alberto Barrios',
-  movements: [430, 1000, 700, 50, 90],
+  movements: [430, 1000.85, 700, 50.75, 90],
   interestRate: 1,
   pin: 4444,
 };
@@ -141,8 +141,8 @@ function  displayMovements(acc){
       <div class="movements__type movements__type--${
         mov >=0 ? 'deposit' : 'withdrawal'
       }">${mov >=0 ? 'Ingreso' : 'Retiro'} </div>
-      <div class="movements__date">6/04/2022</div>
-      <div class="movements__value">${mov}€</div>
+      <div class="movements__date">'06/04/2022'</div>
+      <div class="movements__value">${Number.parseFloat(mov).toFixed(2).replace('.',',')}€</div>
     </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
@@ -151,11 +151,23 @@ function  displayMovements(acc){
 
 }
 
+function calculateBalance(acc){
+  const total=acc.movements.reduce(function(previousValue, currentValue){
+
+    return parseFloat(previousValue + currentValue);
+    //0 es el valor inicial
+    },0);
+  labelBalance.textContent=`${total.toFixed(2).replace('.', ',')} €`;
+}
+
 function updateUI(acc){
   displayMovements(acc);
+  calculateBalance(acc);
+  cal
  
 
 }
+
 
 loginForm.addEventListener('submit', function(event){
   event.preventDefault();
@@ -168,7 +180,7 @@ formProps.username
 formProps.pin*/
 //acc sería cada objeto del array account
 const currentAccount=accounts.find(function(acc){
-  return acc.username === formProps.username;
+  return acc.username === formProps.username.trim();
 });
 
 if(!currentAccount){
@@ -188,6 +200,8 @@ if(!currentAccount){
 
   }
 
+  
+
 /*evaluo si el usuario que hay en el array y el escrito por el usuario es el mismo  
  if(acc.username ===formProps.username){
     return true;
@@ -200,3 +214,15 @@ if(!currentAccount){
 console.log(currentAccount);
 
 });
+function currentDate(date){
+  const format ={
+    dd: date.getDate(),
+    mm: date.getMonth()+1,
+    yyyy: date.getFullYear()
+  }
+
+
+return `${format.dd}/${format.mm}/${format.yyyy}`;
+  
+}
+labelDate.textContent=currentDate(new Date());
