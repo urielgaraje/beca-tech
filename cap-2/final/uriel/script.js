@@ -6,7 +6,7 @@
 
 // Data
 const account1 = {
-  owner: 'Uriel Blanco',
+  owner: 'Uriel Blanco ',
   movements: [200, 450, -400, 3000.67, -650, -130, 70.43, 1300],
   interestRate: 1.2, // %
   pin: 1111,
@@ -100,7 +100,7 @@ function createUsernamesSLIM(account) {
 
 function createUsernames(account) {
   const username = account.owner
-    .split(' ') /* => ['Uriel','Blanco'];*/
+    .split(' ') /* => ['Uriel','Blanco', ''];*/
     .map(function (word) {
       return word.toLowerCase();
     }) /* => ['uriel','blanco'];*/
@@ -144,7 +144,7 @@ loginForm.addEventListener('submit', function (event) {
   const formProps = Object.fromEntries(formData);
 
   currentAccount = accounts.find(function (acc) {
-    return acc.username === formProps.username;
+    return acc.username === formProps.username.trim();
   });
 
   // function(a,b){
@@ -187,7 +187,9 @@ function displayMovements(acc) {
           mov >= 0 ? 'deposit' : 'withdrawal'
         }">${mov >= 0 ? 'Ingreso' : 'Retiro'}</div>
         <div class="movements__date"> 6/4/2022</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${Number.parseFloat(mov)
+          .toFixed(2)
+          .replace('.', ',')}€</div>
       </div>
     `;
 
@@ -195,6 +197,18 @@ function displayMovements(acc) {
   });
 }
 
+function calcDisplayBalance(acc) {
+  const total = acc.movements.reduce(function (previousValue, currentValue) {
+    return parseFloat(previousValue + currentValue);
+  }, 0);
+
+  labelBalance.textContent = `${total.toFixed(2).replace('.', ',')}€`;
+}
+
 function updateUI(acc) {
   displayMovements(acc);
+
+  calcDisplayBalance(acc);
+
+  //calcDisplaySummary(acc);
 }
