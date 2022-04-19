@@ -159,11 +159,30 @@ function calculateBalance(acc){
     },0);
   labelBalance.textContent=`${total.toFixed(2).replace('.', ',')} €`;
 }
+/*function calDisplaySummary(acc){
+  const incomes=acc.movements
+  .filter(function(mov){
+    return mov > 0;
+  })
+  .reduce(function(prevValue, currValue){
+ 
+    return prevValue+currValue;
+ 
+  },0);
+  labelSumIn.textContent=`${incomes}€`;
+ 
+  /*const withdrawals = acc.movements
+ 
+  const interest = acc.movements
+ 
+}*/
+ 
+
 
 function updateUI(acc){
   displayMovements(acc);
   calculateBalance(acc);
-  cal
+  //calcDisplaySummary(acc);
  
 
 }
