@@ -159,7 +159,7 @@ function calculateBalance(acc){
     },0);
   labelBalance.textContent=`${total.toFixed(2).replace('.', ',')} €`;
 }
-/*function calDisplaySummary(acc){
+function calcDisplaySummary(acc){
   const incomes=acc.movements
   .filter(function(mov){
     return mov > 0;
@@ -169,20 +169,30 @@ function calculateBalance(acc){
     return prevValue+currValue;
  
   },0);
-  labelSumIn.textContent=`${incomes}€`;
+  labelSumIn.textContent=`${incomes.toFixed(2)}€`;
  
-  /*const withdrawals = acc.movements
+  const withdrawals = acc.movements
+  .filter(function(mov){
+    return mov<0;
+  })
+  .reduce(function(pValue, cValue){
+    return pValue+cValue;
+  },0);
+  labelSumOut.textContent=`${withdrawals.toFixed(2)}€`;
  
-  const interest = acc.movements
- 
-}*/
+  /*const interest = acc.movements
+  .filter(function(mov){
+    return mov > 0;
+  })
+ */
+}
  
 
 
 function updateUI(acc){
   displayMovements(acc);
   calculateBalance(acc);
-  //calcDisplaySummary(acc);
+  calcDisplaySummary(acc);
  
 
 }
