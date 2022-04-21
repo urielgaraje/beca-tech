@@ -180,11 +180,21 @@ function calcDisplaySummary(acc){
   },0);
   labelSumOut.textContent=`${withdrawals.toFixed(2)}€`;
  
-  /*const interest = acc.movements
+  const interest = acc.movements
   .filter(function(mov){
     return mov > 0;
   })
- */
+  .map(function(deposit){
+    return (deposit * acc.interestRate)/100;
+  })
+  .filter(function(num){
+    return num>=1;
+  })
+  .reduce(function(prevVal, currVal){
+    return prevVal+currVal;
+  },0);
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
+ 
 }
  
 
