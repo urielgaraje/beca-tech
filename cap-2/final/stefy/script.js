@@ -64,7 +64,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const loginForm=document.querySelector('.login');
 const loanForm = document.querySelector('.form--loan');
 const closeForm=document.querySelector('.form--close');
-const tranferForm=document.querySelector('.form--transfer');
+const transferForm=document.querySelector('.form--transfer');
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -155,6 +155,15 @@ function  displayMovements(acc){
   });
 
 }
+function balance(acc){
+  let totalMoney=acc.movements.reduce(function(previousValue, currentValue){
+
+    return parseFloat(previousValue + currentValue);
+    },0);
+    
+    return totalMoney;
+
+}
 
 function calculateBalance(acc){
   const total=acc.movements.reduce(function(previousValue, currentValue){
@@ -202,16 +211,12 @@ function calcDisplaySummary(acc){
  
 }
  
-
-
 function updateUI(acc){
   displayMovements(acc);
   calculateBalance(acc);
   calcDisplaySummary(acc);
  
-
 }
-
 
 
 loginForm.addEventListener('submit', function(event){
@@ -228,7 +233,6 @@ currentAccount=accounts.find(function(acc){
   return acc.username === formProps.username.trim();
 
 });
-
 
 if(!currentAccount){
   alert('Error: usuario no encontrado!');
@@ -274,20 +278,6 @@ return `${format.dd}/${format.mm}/${format.yyyy}`;
 }
 labelDate.textContent=currentDate(new Date());
 
-/*btnLoan.addEventListener('click', function (e){
-  e.preventDefault();
-
-  let amount = Number(inputLoanAmount.value);
- 
-  if(amount>0){
-   amount*=0.1;
-   currentAccount.movements.push(amount);
-   console.log(movements);
-    updateUI();
-    
-  }
-  inputLoanAmount.value="";
-})*/
 
 loanForm.addEventListener('submit', function (e){
   e.preventDefault();
@@ -311,7 +301,7 @@ const closePin=Number(inputClosePin.value);
 
 if(closeUser===currentAccount.username && closePin===currentAccount.pin){
  
-  labelWelcome.textContent=`Gracias por usar nuestro servicio `;
+  labelWelcome.textContent=`Gracias por usar nuestro servicio ${currentAccount?.owner.split(' ')[0]} !`;;
   inputLoginUsername.value=inputLoginPin.value= "";
 
   const index = accounts.findIndex((acc) => acc.username === closeUser);
@@ -321,9 +311,22 @@ if(closeUser===currentAccount.username && closePin===currentAccount.pin){
   containerApp.style.opacity=0;
 
 })
-tranferForm.addEventListener('submit', function(e){
+transferForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const receiverAcc =accounts.find(acc=>acc.username===inputTransferTo.value);
+  const amountToTransfer=Number(inputTransferAmount.value);
+  let moneyAvailable=balance(currentAccount);
+  console.log(receiverAcc);
+ console.log(moneyAvailable);
+
+  if(amountToTransfer>0 && receiverAcc && moneyAvailable>=amountToTransfer && currentAccount.username !== receiverAcc.username){
+    currentAccount.movements.push(-amountToTransfer);
+    receiverAcc.movements.push(amountToTransfer);
+
+
+    updateUI(currentAccount);
+  }
+  
+inputTransferAmount.value=inputTransferTo.value= "";
 
 })
-
-
-
