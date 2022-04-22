@@ -64,6 +64,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const loginForm=document.querySelector('.login');
 const loanForm = document.querySelector('.form--loan');
 const closeForm=document.querySelector('.form--close');
+const tranferForm=document.querySelector('.form--transfer');
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -290,16 +291,15 @@ labelDate.textContent=currentDate(new Date());
 
 loanForm.addEventListener('submit', function (e){
   e.preventDefault();
-  const formData = new FormData(event.target);
+  const formData = new FormData(e.target);
   const formProps = Object.fromEntries(formData);
 
   let amount = Number(inputLoanAmount.value);
  
   if(amount>0){
-    amount*=0.1;
     currentAccount.movements.push(amount);
     console.log(movements);
-    updateUI();
+    updateUI(currentAccount);
     
   }
   inputLoanAmount.value="";
@@ -310,13 +310,20 @@ const closeUser=inputCloseUsername.value.toLowerCase().trim();
 const closePin=Number(inputClosePin.value);
 
 if(closeUser===currentAccount.username && closePin===currentAccount.pin){
-  containerApp.style.opacity=0;
-  labelWelcome.textContent=`Gracias por usar nuestro servicio`;
-  inputLoginUsername="";
-  inputLoginPin="";
-  }
+ 
+  labelWelcome.textContent=`Gracias por usar nuestro servicio `;
+  inputLoginUsername.value=inputLoginPin.value= "";
 
+  const index = accounts.findIndex((acc) => acc.username === closeUser);
+  //elimino del array el elemento
+  accounts.splice(index,1);
+  }
+  containerApp.style.opacity=0;
 
 })
+tranferForm.addEventListener('submit', function(e){
+
+})
+
 
 
