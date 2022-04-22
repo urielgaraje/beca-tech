@@ -62,6 +62,8 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const loginForm=document.querySelector('.login');
+const loanForm = document.querySelector('.form--loan');
+const closeForm=document.querySelector('.form--close');
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -73,7 +75,7 @@ const currencies = new Map([
   ['GBP', 'Libra esterlina'],
 ]);
 
-const movements = [200, 450, -400, 3000.25, -650, -130, 70, 1300];
+let movements = [200, 450, -400, 3000.25, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 /* const account1 = {
@@ -87,6 +89,8 @@ const movements = [200, 450, -400, 3000.25, -650, -130, 70, 1300];
 // (a,b) => { return a + b};
 // a => { return a};
 //let account;
+
+let currentAccount;
 
 function createUsernamesSLIM(currentAccount) {
   const username = currentAccount.owner
@@ -127,7 +131,7 @@ accounts.forEach(function (acc) {
 console.log(accounts);
 //console.log(createUsernames(account1));
 
-let currentAccount;
+
 
 function  displayMovements(acc){
 
@@ -208,6 +212,7 @@ function updateUI(acc){
 }
 
 
+
 loginForm.addEventListener('submit', function(event){
   event.preventDefault();
 //target contiene el form, obtenemos los datos del formulario clave:valor
@@ -218,9 +223,11 @@ loginForm.addEventListener('submit', function(event){
 formProps.username
 formProps.pin*/
 //acc sería cada objeto del array account
-const currentAccount=accounts.find(function(acc){
+currentAccount=accounts.find(function(acc){
   return acc.username === formProps.username.trim();
+
 });
+
 
 if(!currentAccount){
   alert('Error: usuario no encontrado!');
@@ -265,3 +272,51 @@ return `${format.dd}/${format.mm}/${format.yyyy}`;
   
 }
 labelDate.textContent=currentDate(new Date());
+
+/*btnLoan.addEventListener('click', function (e){
+  e.preventDefault();
+
+  let amount = Number(inputLoanAmount.value);
+ 
+  if(amount>0){
+   amount*=0.1;
+   currentAccount.movements.push(amount);
+   console.log(movements);
+    updateUI();
+    
+  }
+  inputLoanAmount.value="";
+})*/
+
+loanForm.addEventListener('submit', function (e){
+  e.preventDefault();
+  const formData = new FormData(event.target);
+  const formProps = Object.fromEntries(formData);
+
+  let amount = Number(inputLoanAmount.value);
+ 
+  if(amount>0){
+    amount*=0.1;
+    currentAccount.movements.push(amount);
+    console.log(movements);
+    updateUI();
+    
+  }
+  inputLoanAmount.value="";
+})
+closeForm.addEventListener('submit', function (e){
+  e.preventDefault();
+const closeUser=inputCloseUsername.value.toLowerCase().trim();
+const closePin=Number(inputClosePin.value);
+
+if(closeUser===currentAccount.username && closePin===currentAccount.pin){
+  containerApp.style.opacity=0;
+  labelWelcome.textContent=`Gracias por usar nuestro servicio`;
+  inputLoginUsername="";
+  inputLoginPin="";
+  }
+
+
+})
+
+
