@@ -139,14 +139,15 @@ function  displayMovements(acc){
   containerMovements.innerHTML='';
 
   acc.movements.forEach(function(mov){
-  
+  let date = new Date();
     const html=`
  
     <div class="movements__row">
       <div class="movements__type movements__type--${
         mov >=0 ? 'deposit' : 'withdrawal'
       }">${mov >=0 ? 'Ingreso' : 'Retiro'} </div>
-      <div class="movements__date">'06/04/2022'</div>
+      <div class="movements__date">${currentDate(date)}</div>
+
       <div class="movements__value">${Number.parseFloat(mov).toFixed(2).replace('.',',')}€</div>
     </div>
     `;
@@ -317,7 +318,7 @@ transferForm.addEventListener('submit', function(e){
   const amountToTransfer=Number(inputTransferAmount.value);
   let moneyAvailable=balance(currentAccount);
   console.log(receiverAcc);
- console.log(moneyAvailable);
+  console.log(moneyAvailable);
 
   if(amountToTransfer>0 && receiverAcc && moneyAvailable>=amountToTransfer && currentAccount.username !== receiverAcc.username){
     currentAccount.movements.push(-amountToTransfer);
