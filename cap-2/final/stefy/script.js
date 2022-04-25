@@ -10,6 +10,18 @@ const account1 = {
   movements: [200.4321, 450, -400, 3000.30, -650, -130, 70, 1300.75],
   interestRate: 1.2, // %
   pin: 1111,
+  movementsDates: [
+    "2022-04-24T21:31:17.178Z",
+    "2022-04-25T07:42:02.383Z",
+    "2020-01-28T09:15:04.904Z",
+    "2020-04-01T10:17:24.185Z",
+    "2020-05-08T14:11:59.604Z",
+    "2020-07-26T17:01:17.194Z",
+    "2020-07-28T12:36:17.929Z",
+    "2020-08-01T10:51:36.790Z",
+  ],
+  currency: "EUR",
+  locale: "pt-PT", // de-DE
 };
 
 const account2 = {
@@ -17,6 +29,19 @@ const account2 = {
   movements: [5000, 3400.40, -150, -790, -3210, -1000, 8500.90, -30],
   interestRate: 1.5,
   pin: 2222,
+  movementsDates: [
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-01-28T09:15:04.904Z",
+    "2020-04-01T10:17:24.185Z",
+    "2020-05-08T14:11:59.604Z",
+    "2020-07-26T17:01:17.194Z",
+    "2020-07-28T23:36:17.929Z",
+    "2020-08-01T10:51:36.790Z",
+  ],
+  currency: "EUR",
+  locale: "pt-PT", // de-DE
+  
 };
 
 const account3 = {
@@ -24,6 +49,18 @@ const account3 = {
   movements: [200, -200, 340.25, -300, -20, 50, 400.75, -460],
   interestRate: 0.7,
   pin: 3333,
+  movementsDates: [
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-01-28T09:15:04.904Z",
+    "2020-04-01T10:17:24.185Z",
+    "2020-05-08T14:11:59.604Z",
+    "2020-07-26T17:01:17.194Z",
+    "2020-07-28T23:36:17.929Z",
+    "2020-08-01T10:51:36.790Z",
+  ],
+  currency: "EUR",
+  locale: "pt-PT", // de-DE
 };
 
 const account4 = {
@@ -31,6 +68,18 @@ const account4 = {
   movements: [430, 1000.85, 700, 50.75, 90],
   interestRate: 1,
   pin: 4444,
+  movementsDates: [
+    "2019-11-18T21:31:17.178Z",
+    "2019-12-23T07:42:02.383Z",
+    "2020-01-28T09:15:04.904Z",
+    "2020-04-01T10:17:24.185Z",
+    "2020-05-08T14:11:59.604Z",
+    "2020-07-26T17:01:17.194Z",
+    "2022-04-28T23:36:17.929Z",
+    "2022-04-01T10:51:36.790Z",
+  ],
+  currency: "EUR",
+  locale: "es-ES", // de-DE
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -65,6 +114,7 @@ const loginForm=document.querySelector('.login');
 const loanForm = document.querySelector('.form--loan');
 const closeForm=document.querySelector('.form--close');
 const transferForm=document.querySelector('.form--transfer');
+const logoutTimer = document.querySelector('.logout-timer');
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -91,7 +141,7 @@ let movements = [200, 450, -400, 3000.25, -650, -130, 70, 1300];
 // a => { return a};
 //let account;
 
-let currentAccount;
+let currentAccount, timer;
 
 function createUsernamesSLIM(currentAccount) {
   const username = currentAccount.owner
@@ -132,21 +182,48 @@ accounts.forEach(function (acc) {
 console.log(accounts);
 //console.log(createUsernames(account1));
 
+function formatMovementDate(date, locale){
+  const calcDayPassed=(date1, date2)=>{
 
+    return Math.round(Math.abs(date2-date1)/(1000*60*60*24));
+  };
+  // recibe la fecha actual 
+  const daysPassed = calcDayPassed(new Date(), date);
+  let dateFormatted;
+  switch(daysPassed){
+    case 0:
+      dateFormatted='Hoy';
+      break;
+    case 1:
+      dateFormatted='Ayer';
+      break;
+    case(2,3,4,5,6,7):
+      dateFormatted=`${daysPassed} días atrás`
+      break;
+      default:
+        dateFormatted=new Intl.DateTimeFormat(locale).format(date);
+
+
+      return dateFormatted;
+  }
+
+}
 
 function  displayMovements(acc){
 
   containerMovements.innerHTML='';
 
-  acc.movements.forEach(function(mov){
-  let date = new Date();
+  acc.movements.forEach(function(mov, index){
+  let date = new Date(acc.movementsDates[index]);
+  const displayDate=formatMovementDate(date,acc.locale)
+  
     const html=`
  
     <div class="movements__row">
       <div class="movements__type movements__type--${
         mov >=0 ? 'deposit' : 'withdrawal'
       }">${mov >=0 ? 'Ingreso' : 'Retiro'} </div>
-      <div class="movements__date">${currentDate(date)}</div>
+      <div class="movements__date">${(displayDate)}</div>
 
       <div class="movements__value">${Number.parseFloat(mov).toFixed(2).replace('.',',')}€</div>
     </div>
@@ -331,3 +408,71 @@ transferForm.addEventListener('submit', function(e){
 inputTransferAmount.value=inputTransferTo.value= "";
 
 })
+
+/*function startTimer(duration, display){
+  let timer = duration, minutes, seconds;
+  setInterval(function(){
+    minutes =parseInt(timer /60,10);
+    seconds =parseInt(timer %60,10);
+    seconds = seconds <10?"0"+ seconds : seconds;
+    display.textContent=seconds;
+            
+
+  if(--timer<0){
+    containerApp.style.opacity=0;
+    labelWelcome.textContent='Debes volver a loguearte';
+  }else{
+    totalTime--;
+    setTimeout("timer()",1000);
+  }
+})
+const startTimer= function(){
+    let time=300;
+  const timer =setInterval(function (){
+    let min= String(Math.trunc(time/60)).padStart(2,0);
+    let sec= String(time%60).padStart(2,0);
+    //en cada llamada imprimo el tiempo restante
+    labelTimer.textContent=`${min}:${sec}`;
+    time--;
+    if(time=== 0){
+      clearInterval(timer);
+      labelWelcome.textContent = "Logueate para empezar";
+      containerApp.style.opacity=0;
+    }
+ 
+  } ,1000);
+
+  //llamo al timer cada segundo
+
+  return timer;
+ 
+};
+
+let time_minutes = 5; // Value in minutes
+let time_seconds = 00; // Value in seconds
+
+let duration = time_minutes * 60 + time_seconds;
+function paddedFormat(num) {
+  return num < 10 ? "0" + num : num; 
+}
+labelTimer.textContent=`${paddedFormat(min)}:${paddedFormat(sec)}`;
+function startCountDown(duration, element) {
+  let secondsRemaining = duration;
+  let min = 0;
+  let sec = 0;
+  
+  let countInterval = setInterval(function () {
+  
+      min = parseInt(secondsRemaining / 60);
+      sec = parseInt(secondsRemaining % 60);
+  
+      labelTimer.textContent = `${paddedFormat(min)}:${paddedFormat(sec)}`;
+  
+      secondsRemaining = secondsRemaining - 1;
+      if (secondsRemaining < 0) { clearInterval(countInterval) };
+  
+  }, 1000);
+}
+*/
+     
+               
