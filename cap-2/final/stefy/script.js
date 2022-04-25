@@ -11,14 +11,14 @@ const account1 = {
   interestRate: 1.2, // %
   pin: 1111,
   movementsDates: [
-    "2022-04-24T21:31:17.178Z",
-    "2022-04-25T07:42:02.383Z",
-    "2020-01-28T09:15:04.904Z",
-    "2020-04-01T10:17:24.185Z",
-    "2020-05-08T14:11:59.604Z",
-    "2020-07-26T17:01:17.194Z",
-    "2020-07-28T12:36:17.929Z",
-    "2020-08-01T10:51:36.790Z",
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2022-04-20T17:01:17.194Z',
+    '2022-04-25T12:36:17.929Z',
+    '2022-04-24T10:51:36.790Z',
   ],
   currency: "EUR",
   locale: "pt-PT", // de-DE
@@ -59,8 +59,8 @@ const account3 = {
     "2020-07-28T23:36:17.929Z",
     "2020-08-01T10:51:36.790Z",
   ],
-  currency: "EUR",
-  locale: "pt-PT", // de-DE
+  currency: "USD",
+  locale: "en-US", // de-DE
 };
 
 const account4 = {
@@ -182,32 +182,32 @@ accounts.forEach(function (acc) {
 console.log(accounts);
 //console.log(createUsernames(account1));
 
-function formatMovementDate(date, locale){
-  const calcDayPassed=(date1, date2)=>{
-
-    return Math.round(Math.abs(date2-date1)/(1000*60*60*24));
+function formatMovementDate(date, locale) {
+  const calcDayPassed = (date1, date2) => {
+    return Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
   };
-  // recibe la fecha actual 
+
   const daysPassed = calcDayPassed(new Date(), date);
   let dateFormatted;
-  switch(daysPassed){
+
+  switch (daysPassed) {
     case 0:
-      dateFormatted='Hoy';
+      dateFormatted = 'Hoy';
       break;
     case 1:
-      dateFormatted='Ayer';
+      dateFormatted = 'Ayer';
       break;
-    case(2,3,4,5,6,7):
-      dateFormatted=`${daysPassed} días atrás`
+    case (2, 3, 4, 5, 6, 7):
+      dateFormatted = `${daysPassed} días atras`;
       break;
-      default:
-        dateFormatted=new Intl.DateTimeFormat(locale).format(date);
-
-
-      return dateFormatted;
+    default:
+      dateFormatted = new Intl.DateTimeFormat(locale).format(date);
+      break;
   }
 
+  return dateFormatted;
 }
+
 
 function  displayMovements(acc){
 
