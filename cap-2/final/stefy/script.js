@@ -327,6 +327,8 @@ if(!currentAccount){
     inputLoginPin.blur();
     labelWelcome.textContent=`Bienvenido, ${currentAccount?.owner.split(' ')[0]} !`;
 
+    if(timer) clearInterval(timer);
+    timer=startLogOutTimer();
   }
 
   
@@ -401,6 +403,9 @@ transferForm.addEventListener('submit', function(e){
     currentAccount.movements.push(-amountToTransfer);
     receiverAcc.movements.push(amountToTransfer);
 
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAcc.movementsDates.push(new Date().toISOString());
+
 
     updateUI(currentAccount);
   }
@@ -408,7 +413,12 @@ transferForm.addEventListener('submit', function(e){
 inputTransferAmount.value=inputTransferTo.value= "";
 
 })
-
+/*
+btnSort.addEventListener('click', function (e){
+  e.preventDefault();
+  currentAccount.movements.sort();
+})
+*/
 /*function startTimer(duration, display){
   let timer = duration, minutes, seconds;
   setInterval(function(){
@@ -475,4 +485,26 @@ function startCountDown(duration, element) {
 }
 */
      
-               
+const startLogOutTimer = function () {
+  let time = 300;
+
+  const timer = setInterval(function () {
+   
+
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+   
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    time--;
+
+    if (time === -1) {
+      clearInterval(timer); 
+      labelWelcome.textContent = 'Debes volver a loguearte';
+      containerApp.style.opacity = 0;
+    }
+  }, 1000);
+
+  return timer;
+};
