@@ -296,11 +296,16 @@ h2 {
   font-weight: 600;
 }
 @media screen and (max-width: 480px){
+  body{
+    padding: 1rem;
+  
+  }
   nav{
     flex-direction: column; 
     margin-top: 1.5rem;
     align-self: center;
     justify-content: center;
+   
   
     }
     .footer {
@@ -309,6 +314,7 @@ h2 {
       text-align: center;
     }
   img.logo{
+    margin-top: 1rem;
     order: 0;
   }
   p.welcome{
@@ -327,7 +333,7 @@ h2 {
     padding: auto;
     order: -1;
   }
-   }
+   
   form.login{
     order: 2;
     margin-top: 1.5rem;
@@ -343,15 +349,21 @@ h2 {
   }
   .summary{
    display: grid;
-   grid-template-columns: 2fr 1fr;
-   justify-content: left;
-   margin-left: 1.2rem;
-   order: -1;
+    grid-template-columns: 2fr;
+    grid-template-rows: auto;
+    order: -1;
+
+
+  }
+  p.summary__label{
+    font-size: 1.5rem;
   }
   .btn--sort{
-    margin-top: 3rem;
-    display: contents;
+   grid-column: 1 / span2 ;
+    font-size: 1.3rem;
   }
   .balance__value{
     font-size: 4rem;
+    
   }
+}
