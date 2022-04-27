@@ -295,3 +295,40 @@ h2 {
 .timer {
   font-weight: 600;
 }
+@media screen and (max-width: 480px){
+  html{
+    overflow: hidden;
+  }
+  body{
+    overflow: hidden;
+  }
+  nav{
+    flex-direction: column; 
+    margin-top: 1.5rem;
+    align-self: center;
+    justify-content: center;
+  
+    }
+  footer{
+    display: none;
+  }
+  img.logo{
+    order: 0;
+
+  }
+  p.welcome{
+    display: flex;
+    font-size: 1.4rem;
+    justify-content: center;
+    order: 1;
+    margin-top: 1.5rem;
+  }
+  
+   }
+  form.login{
+    order: 2;
+    margin-top: 1.5rem;
+   
+  }
+  
+  
