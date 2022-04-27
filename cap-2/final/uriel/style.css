@@ -11,7 +11,7 @@
 }
 
 html {
-  font-size: 62.5%; /* Equal to 10px in most browsers */
+  font-size: 62.5%;
   box-sizing: border-box;
 }
 
@@ -89,12 +89,11 @@ nav {
   max-width: 100rem;
   margin: 4rem auto;
   display: grid;
-  grid-template-columns: 4fr 3fr;
+  grid-template-columns: 4fr 2fr;
   grid-template-rows: auto repeat(3, 15rem) auto;
   gap: 2rem;
 
   /* NOTE This creates the fade in/out anumation */
-
   opacity: 0;
   transition: all 1s;
 }
@@ -295,4 +294,48 @@ h2 {
 
 .timer {
   font-weight: 600;
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    font-size: 40%;
+    padding: 1rem;
+  }
+  nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  img {
+    order: -1;
+  }
+  .app {
+    display: flex;
+    flex-direction: column;
+  }
+  .btn--sort {
+    grid-column: 1 / span 2;
+  }
+  .logout-timer {
+    order: 4;
+  }
+  .movements {
+    order: 2;
+  }
+  .operation {
+    order: 3;
+  }
+  .summary {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    order: 1;
+  }
+  .summary__value {
+    margin-right: 1rem;
+  }
+  .welcome {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 }

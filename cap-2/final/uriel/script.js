@@ -7,19 +7,18 @@
 // Data
 const account1 = {
   owner: 'Uriel Blanco ',
-  movements: [200, 450, -400, 3000.67, -650, -130, 70.43, 1300],
+  movements: [
+    { value: 200, date: '2019-11-18T21:31:17.178Z' },
+    { value: 450, date: '2019-12-23T07:42:02.383Z' },
+    { value: -400, date: '2020-01-28T09:15:04.904Z' },
+    { value: 3000.67, date: '2020-04-01T10:17:24.185Z' },
+    { value: -650, date: '2020-05-08T14:11:59.604Z' },
+    { value: -130, date: '2022-04-20T17:01:17.194Z' },
+    { value: 70.43, date: '2022-04-25T12:36:17.929Z' },
+    { value: 1300, date: '2022-04-24T10:51:36.790Z' },
+  ],
   interestRate: 1.2, // %
   pin: 1111,
-  movementsDates: [
-    '2019-11-18T21:31:17.178Z',
-    '2019-12-23T07:42:02.383Z',
-    '2020-01-28T09:15:04.904Z',
-    '2020-04-01T10:17:24.185Z',
-    '2020-05-08T14:11:59.604Z',
-    '2022-04-20T17:01:17.194Z',
-    '2022-04-25T12:36:17.929Z',
-    '2022-04-24T10:51:36.790Z',
-  ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
 };
@@ -186,7 +185,7 @@ console.log(accounts);
   console.log(event);
 }); */
 
-let currentAccount;
+let currentAccount, timer;
 
 loginForm.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -222,6 +221,9 @@ loginForm.addEventListener('submit', function (event) {
 
     containerApp.style.opacity = 100;
     updateUI(currentAccount);
+
+    if (timer) clearTimeout(timer);
+    timer = startLogOutTimer();
   }
 
   /*  console.log(formProps);
@@ -254,20 +256,29 @@ function formatMovementDate(date, locale) {
   return dateFormatted;
 }
 
-function displayMovements(acc) {
+function displayMovements(acc, sorted = false) {
   containerMovements.innerHTML = '';
 
-  acc.movements.forEach(function (mov, index) {
-    const date = new Date(acc.movementsDates[index]);
+  const movs = sorted
+    ? acc.movements
+        .slice()
+        .sort(
+          (first, second) =>
+            new Date(first.date).getTime() - new Date(second.date).getTime()
+        )
+    : acc.movements;
+
+  movs.forEach(function (mov, index) {
+    const date = new Date(mov.date);
     const displayDate = formatMovementDate(date, acc.locale);
 
     const html = `
       <div class="movements__row">
         <div class="movements__type movements__type--${
-          mov >= 0 ? 'deposit' : 'withdrawal'
-        }">${mov >= 0 ? 'Ingreso' : 'Retiro'}</div>
+          mov.value >= 0 ? 'deposit' : 'withdrawal'
+        }">${mov.value >= 0 ? 'Ingreso' : 'Retiro'}</div>
         <div class="movements__date">${displayDate}</div>
-        <div class="movements__value">${Number.parseFloat(mov)
+        <div class="movements__value">${Number.parseFloat(mov.value)
           .toFixed(2)
           .replace('.', ',')}€</div>
       </div>
@@ -279,10 +290,47 @@ function displayMovements(acc) {
 
 function calcDisplayBalance(acc) {
   const total = acc.movements.reduce(function (previousValue, currentValue) {
-    return parseFloat(previousValue + currentValue);
+    return parseFloat(previousValue + currentValue.value);
   }, 0);
 
   labelBalance.textContent = `${total.toFixed(2).replace('.', ',')}€`;
+}
+function calcDisplaySummary(acc) {
+  const incomes = acc.movements
+    .filter(function (mov) {
+      return mov.value > 0;
+    })
+    .reduce(function (prevValue, currValue) {
+      return prevValue + currValue.value;
+    }, 0);
+
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
+
+  const withdrawals = acc.movements
+    .filter(function (mov) {
+      return mov.value < 0;
+    })
+    .reduce(function (pValue, cValue) {
+      return pValue + cValue.value;
+    }, 0);
+
+  labelSumOut.textContent = `${withdrawals.toFixed(2)}€`;
+
+  const interest = acc.movements
+    .filter(function (mov) {
+      return mov.value > 0;
+    })
+    .map(function (deposit) {
+      return (deposit.value * acc.interestRate) / 100;
+    })
+    .filter(function (num) {
+      return num >= 1;
+    })
+    .reduce(function (prevVal, currVal) {
+      return prevVal + currVal;
+    }, 0);
+
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 }
 
 function updateUI(acc) {
@@ -290,5 +338,37 @@ function updateUI(acc) {
 
   calcDisplayBalance(acc);
 
-  //calcDisplaySummary(acc);
+  calcDisplaySummary(acc);
 }
+
+const startLogOutTimer = function () {
+  let time = 300;
+
+  const timer = setInterval(function () {
+    //setInterval Ejecuta una función o un fragmento de código de forma repetitiva cada vez que termina el periodo de tiempo determinado
+
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    //trunc devuelve la parte entera de un numero removiendo cualquier dígito decimal
+    //padStart rellena la cadena actual con una cadena dada (repetida eventualmente) de modo que la cadena resultante alcance una longitud dada
+    const sec = String(time % 60).padStart(2, 0);
+
+    labelTimer.textContent = `${min}:${sec}`;
+
+    time--;
+
+    if (time === -1) {
+      clearInterval(timer); //Cancela una acción reiterativa que se inició mediante una llamada a setInterval
+      labelWelcome.textContent = 'Debes volver a loguearte';
+      containerApp.style.opacity = 0;
+    }
+  }, 1000);
+
+  return timer;
+};
+
+let sort = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount, !sort);
+  sort = !sort;
+});
