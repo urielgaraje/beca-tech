@@ -5,6 +5,8 @@
 // BANKIST APP
 
 // Data
+
+
 const account1 = {
   owner: 'Uriel Blanco',
   movements: [
@@ -314,6 +316,7 @@ formProps.pin*/
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
     inputLoginPin.blur();
+    sayHello(currentAccount.owner);
     labelWelcome.textContent = `Bienvenido, ${
       currentAccount?.owner.split(' ')[0]
     } !`;
