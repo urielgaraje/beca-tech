@@ -1,5 +1,4 @@
 'use strict';
-
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // BANKIST APP
@@ -215,6 +214,8 @@ loginForm.addEventListener('submit', function (event) {
 
     inputLoginPin.blur();
 
+    sayHello(currentAccount.owner);
+
     labelWelcome.textContent = `Bienvenido ${
       currentAccount.owner.split(' ')[0]
     }!`;
@@ -225,9 +226,6 @@ loginForm.addEventListener('submit', function (event) {
     if (timer) clearTimeout(timer);
     timer = startLogOutTimer();
   }
-
-  /*  console.log(formProps);
-  console.log(event); */
 });
 
 function formatMovementDate(date, locale) {
