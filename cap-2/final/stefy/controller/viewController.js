@@ -62,7 +62,7 @@ function displayMovements(acc, sorted = false) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 }
-function balance(acc) {
+const balance=acc=> {
   let totalMoney = acc.movements.reduce(function (previousValue, currentValue) {
     return parseFloat(previousValue + currentValue);
   }, 0);
@@ -117,4 +117,4 @@ function calcDisplaySummary(acc) {
   displayMovements(currentAccount, !sort);
   sort = !sort;
 }); */
-export { updateUI };
+export { updateUI, balance };

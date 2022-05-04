@@ -74,7 +74,7 @@ const loginHandler = event => {
    
   }
 
-  console.log(currentAccount);
+  
 };
 export { loginHandler };
 /* function createUsernamesSLIM(currentAccount) {
