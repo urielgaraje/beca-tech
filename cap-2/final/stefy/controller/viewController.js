@@ -64,7 +64,7 @@ function displayMovements(acc, sorted = false) {
 }
 const balance=acc=> {
   let totalMoney = acc.movements.reduce(function (previousValue, currentValue) {
-    return parseFloat(previousValue + currentValue);
+    return parseFloat(previousValue + currentValue.value);
   }, 0);
 
   return totalMoney;

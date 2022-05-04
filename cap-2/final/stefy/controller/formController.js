@@ -68,7 +68,7 @@ const closeHandler=e=>{
   containerApp.style.opacity = 0;
 }
 const transferHandler =e=>{
-  //transferForm.addEventListener('submit', function (e) {
+  
   e.preventDefault();
 
   const receiverAcc = accounts.find(
@@ -85,14 +85,16 @@ const transferHandler =e=>{
     moneyAvailable >= amountToTransfer &&
     currentAccount.username !== receiverAcc.username
   ) {
-    currentAccount.movements.push(-amountToTransfer);
-    receiverAcc.movements.push(amountToTransfer);
 
-    currentAccount.movementsDates.push(new Date().toISOString());
-    receiverAcc.movementsDates.push(new Date().toISOString());
+    currentAccount.movements.push({
+    value:-amountToTransfer,
+     date:new Date().toISOString()});
+    receiverAcc.movements.push({
+      value:amountToTransfer,
+      date: new Date().toISOString()});
    
     updateUI(currentAccount);
-    //setCurrentAccount(currentAccount);
+    
   }
 
   inputTransferAmount.value = inputTransferTo.value = '';
