@@ -1,4 +1,12 @@
-import { containerMovements ,labelBalance, labelSumIn, labelSumOut, labelSumInterest} from "../variables.js";
+import {
+  containerMovements,
+  labelBalance,
+  labelSumIn,
+  labelSumOut,
+  labelSumInterest,
+  btnSort,
+  sort
+} from '../variables.js';
 const updateUI = acc => {
   displayMovements(acc);
   calculateBalance(acc);
@@ -11,7 +19,7 @@ function formatMovementDate(date, locale) {
 
   let dateFormatted;
   const daysPassed = calcDayPassed(new Date(), date);
-  switch (daysPassed) { 
+  switch (daysPassed) {
     case 0:
       dateFormatted = 'Hoy';
       break;
@@ -62,13 +70,13 @@ function displayMovements(acc, sorted = false) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 }
-const balance=acc=> {
+const balance = acc => {
   let totalMoney = acc.movements.reduce(function (previousValue, currentValue) {
     return parseFloat(previousValue + currentValue.value);
   }, 0);
 
   return totalMoney;
-}
+};
 
 function calculateBalance(acc) {
   const total = acc.movements.reduce(function (previousValue, currentValue) {
