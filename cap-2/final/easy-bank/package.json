@@ -1,0 +1,19 @@
+{
+  "name": "uriel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "dev": "vite",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^2.9.9"
+  },
+  "dependencies": {
+    "firebase": "^9.8.1"
+  }
+}
