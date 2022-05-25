@@ -1,8 +1,15 @@
 import { loginHandler } from './controllers/loginController.js';
-import { loginForm } from './common/variables.js';
+import { loanHandler } from './controllers/formController.js';
+import { loginForm, loanForm } from './common/variables.js';
 
 let currentAccount;
 
-loginForm.addEventListener('submit', function (event) {
-  loginHandler(event, currentAccount);
+const setAccount = acc => (currentAccount = acc);
+
+loginForm.addEventListener('submit', async function (event) {
+  await loginHandler(event, setAccount);
+});
+
+loanForm.addEventListener('submit', function (event) {
+  loanHandler(event, currentAccount);
 });

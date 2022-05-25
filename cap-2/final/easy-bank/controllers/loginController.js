@@ -10,7 +10,7 @@ import {
 
 import { updateUI } from '../controllers/viewController.js';
 
-const loginHandler = async (event, currentAccount) => {
+const loginHandler = async (event, cb) => {
   event.preventDefault();
 
   const formData = new FormData(event.target);
@@ -19,30 +19,30 @@ const loginHandler = async (event, currentAccount) => {
   const accountsRef = collection(db, 'accounts');
   const movementsRef = collection(db, 'movements');
 
-  /**
-   * Tienen las referencias a cada coleccion tanto los movimientos como las cuentas
-   * 
-   * Los movimientos estan relacionados por su campo 'idUser' el cual pueden obtener de la cuenta en su propiedad 'id'
-   * 
-   * Los pasos serían los siguientes:
-   * 
-   * 1. Recuperan la cuenta en base a su 'username' y su 'pin' de la coleccion de accounts
-   * 2. Una vez tienen la cuenta (en caso de que exista) tienen que traer de la coleccion de 'movements'
-   *    todos los registros con el mismo 'idUser' que el de la cuenta (pueden obtener el id desdel el mismo doc).
-   * 3. Como pueden ver abajo si pudieron obtener el 'account' y la lista de 'movements' luego lo que hago 
-   *    es crear un objeto Account.
-   * 
-   * No se preocupen por todo lo demás de momento que si consiguen estos datos todo funciona correctamente!
-   * 
-   * Pista: Ya tienen todas las importaciones que necesitarían...args
-   * Docs: https://firebase.google.com/docs/firestore/query-data/queries?hl=es&authuser=2#execute_a_query
-   *       https://firebase.google.com/docs/firestore/query-data/get-data?authuser=2&hl=es
-   * 
-   * Como las fechas firebase las guarda en miliseconds ya corregí el comportamiento en el viewController todo funciona,
-   * chequeenlo para que vean como esta hecho.
-   */
+  const accQuery = query(
+    accountsRef,
+    where('username', '==', formProps.username.trim()),
+    where('pin', '==', +formProps.pin)
+  );
 
-  currentAccount = new Account(
+  const accSnapshot = await getDocs(accQuery);
+
+  if (accSnapshot.empty) alert('Usuario o contraseña incorrectos!');
+
+  const doc = accSnapshot.docs[0];
+  const movQuery = query(movementsRef, where('idUser', '==', doc.id));
+  const movSnapshot = await getDocs(movQuery);
+
+  const acc = doc.data();
+  const movements = [];
+
+  movSnapshot.forEach(doc => {
+    const { amount, date } = doc.data();
+
+    movements.push({ amount, date });
+  });
+
+  const account = new Account(
     acc.id,
     acc.owner,
     acc.locale,
@@ -50,19 +50,19 @@ const loginHandler = async (event, currentAccount) => {
     movements
   );
 
+  cb(account);
+
   inputLoginUsername.value = '';
   inputLoginPin.value = '';
 
   inputLoginPin.blur();
 
-  labelWelcome.textContent = `Bienvenido ${
-    currentAccount.owner.split(' ')[0]
-  }!`;
+  labelWelcome.textContent = `Bienvenido ${account.owner.split(' ')[0]}!`;
 
   containerApp.style.opacity = 100;
-  updateUI(currentAccount);
-	
-  console.log(currentAccount);
+  updateUI(account);
+
+  console.log(account);
 };
 
 export { loginHandler };

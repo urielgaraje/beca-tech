@@ -25,6 +25,10 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 const loginForm = document.querySelector('.login');
+const loanForm = document.querySelector('.form--loan');
+const closeForm = document.querySelector('.form--close');
+const transferForm = document.querySelector('.form--transfer');
+const logoutTimer = document.querySelector('.logout-timer');
 
 export {
   labelWelcome,
@@ -49,4 +53,8 @@ export {
   inputCloseUsername,
   inputClosePin,
   loginForm,
+  loanForm,
+  closeForm,
+  transferForm,
+  logoutTimer,
 };

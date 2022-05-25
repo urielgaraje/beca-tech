@@ -3,8 +3,16 @@ import {
   labelSumIn,
   labelSumOut,
   labelSumInterest,
-	labelBalance
+  labelBalance,
 } from '../common/variables.js';
+
+const balance = acc => {
+  let totalMoney = acc.movements.reduce(function (previousValue, currentValue) {
+    return parseFloat(previousValue + currentValue.value);
+  }, 0);
+
+  return totalMoney;
+};
 
 function formatMovementDate(date, locale) {
   const calcDayPassed = (date1, date2) => {
@@ -117,4 +125,4 @@ function updateUI(acc) {
   calcDisplaySummary(acc);
 }
 
-export { updateUI };
+export { updateUI, balance };
