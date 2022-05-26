@@ -8,7 +8,7 @@ import {
 
 const balance = acc => {
   let totalMoney = acc.movements.reduce(function (previousValue, currentValue) {
-    return parseFloat(previousValue + currentValue.value);
+    return parseFloat(previousValue + currentValue.amount);
   }, 0);
 
   return totalMoney;
