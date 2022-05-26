@@ -1,6 +1,15 @@
-import { loginHandler } from './controllers/loginController.js';
-import { loanHandler } from './controllers/formController.js';
-import { loginForm, loanForm } from './common/variables.js';
+import { loginHandler } from './controllers/loginController';
+import {
+  loanHandler,
+  transferHandler,
+  closeHandler,
+} from './controllers/formController';
+import {
+  loginForm,
+  loanForm,
+  transferForm,
+  closeForm,
+} from './common/variables';
 
 let currentAccount;
 
@@ -12,4 +21,12 @@ loginForm.addEventListener('submit', async function (event) {
 
 loanForm.addEventListener('submit', function (event) {
   loanHandler(event, currentAccount);
+});
+
+transferForm.addEventListener('submit', function (event) {
+  transferHandler(event, currentAccount);
+});
+
+closeForm.addEventListener('submit', function (event) {
+  closeHandler(event, currentAccount);
 });

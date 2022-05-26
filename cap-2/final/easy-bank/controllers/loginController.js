@@ -6,9 +6,9 @@ import {
   inputLoginUsername,
   inputLoginPin,
   containerApp,
-} from '../common/variables.js';
+} from '../../common/variables.js.js';
 
-import { updateUI } from '../controllers/viewController.js';
+import { updateUI } from './viewController.js';
 
 const loginHandler = async (event, cb) => {
   event.preventDefault();
