@@ -6,7 +6,7 @@ import {
   inputLoginUsername,
   inputLoginPin,
   containerApp,
-} from '../../common/variables.js.js';
+} from '../common/variables.js';
 
 import { updateUI } from './viewController.js';
 
